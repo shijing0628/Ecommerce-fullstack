@@ -82,8 +82,8 @@ const userCtrl = {
 
  getUser: async (req, res) => {
   try {
-   // id of authenatication user
-   const user = await Users.findById(req.user.id)
+   // id of auth user, hide password in postman
+   const user = await (await Users.findById(req.user.id).select('-password'))
    if (!user) return res.status(400).json({ msg: "user does not exist." })
    res.json(user)
   } catch (err) {
