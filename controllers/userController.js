@@ -70,6 +70,7 @@ const userCtrl = {
    return res.status(500).json({ msg: err.message })
   }
  },
+
  logout: async (req, res) => {
   try {
    res.clearCookie('refreshtoken', { path: '/user/refresh_token' })
@@ -78,6 +79,18 @@ const userCtrl = {
    return res.status(500).json({ msg: err.message })
   }
  },
+
+ getUser: async (req, res) => {
+  try {
+   // id of authenatication user
+   const user = await Users.findById(req.user.id)
+   if (!user) return res.status(400).json({ msg: "user does not exist." })
+   res.json(user)
+  } catch (err) {
+   return res.status(500).json({ msg: err.message })
+  }
+ },
+
  refreshToken: (req, res) => {
   try {
    const rf_token = req.cookies.refreshtoken;
