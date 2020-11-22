@@ -22,8 +22,8 @@ const categoryRouter = require('./routes/categoryRouter')
 app.use('/api', categoryRouter)
 const uploadRouter = require('./routes/upload')
 app.use('/api', uploadRouter)
-
-
+const productRouter = require('./routes/productRouter')
+app.use('/api', productRouter)
 
 //Connect to mongodb
 const URI = process.env.MONGODB_URL
