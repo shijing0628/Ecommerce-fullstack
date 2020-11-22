@@ -20,6 +20,8 @@ const userRouter = require('./routes/userRouter')
 app.use('/user', userRouter)
 const categoryRouter = require('./routes/categoryRouter')
 app.use('/api', categoryRouter)
+const uploadRouter = require('./routes/upload')
+app.use('/api', uploadRouter)
 
 
 
