@@ -1,9 +1,47 @@
-const Products = require('../models/productModel')
+const Products = require('../models/productModel');
 
+
+// Filter sorting and pagination
+class APIfeatures {
+ constructor(query, queryString) {
+  this.query = query;
+  this.queryString = queryString;
+ }
+ filtering() {
+  const queryObj = { ...this.queryString }
+  //console.log({ before: queryObj }) //before delete page query
+  const excludedFields = ['page', 'sort', 'limit']
+  excludedFields.forEach(el => delete (queryObj[el]))
+  //console.log({ after: queryObj })  //after delete page query
+  let queryStr = JSON.stringify(queryObj)
+
+  queryStr = queryStr.replace(/\b(gte|gt|lt|lte|regex)\b/g, match => '$' + match)
+  //console.log({ queryStr })
+
+  this.query.find(JSON.parse(queryStr))
+  return this;
+ }
+
+
+ sorting() {
+  if (this.queryString.sort) {
+   const sortBy = this.queryString.sort.split(',').join(' ')
+   this.query = this.query.sort(sortBy)
+  } else {
+   this.query = this.query.sort('-createdAt')
+  }
+
+  return this;
+ }
+ paginating() { }
+}
 const productCtrl = {
  getProducts: async (req, res) => {
   try {
-   const products = await Products.find()
+
+   const features = new APIfeatures(Products.find(), req.query)
+    .filtering().sorting()
+   const products = await features.query
    res.json(products)
   } catch (err) {
    return res.status(500).json({ msg: err.message })
