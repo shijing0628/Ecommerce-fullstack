@@ -7,6 +7,8 @@ class APIfeatures {
   this.query = query;
   this.queryString = queryString;
  }
+
+
  filtering() {
   const queryObj = { ...this.queryString }
   //console.log({ before: queryObj }) //before delete page query
@@ -33,16 +35,29 @@ class APIfeatures {
 
   return this;
  }
- paginating() { }
+
+
+
+ paginating() {
+  const page = this.queryString.page * 1 || 1
+  const limit = this.queryString.limit * 1 || 3
+  const skip = (page - 1) * limit;
+  this.query = this.query.skip(skip).limit(limit)
+  return this;
+ }
 }
 const productCtrl = {
  getProducts: async (req, res) => {
   try {
 
    const features = new APIfeatures(Products.find(), req.query)
-    .filtering().sorting()
+    .filtering().sorting().paginating()
    const products = await features.query
-   res.json(products)
+   res.json({
+    status: 'success',
+    result: products.length,
+    products
+   })
   } catch (err) {
    return res.status(500).json({ msg: err.message })
   }
