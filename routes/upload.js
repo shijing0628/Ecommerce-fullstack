@@ -21,8 +21,8 @@ const removeTmp = (path) => {
 }
 
 
-//upload image to https://cloudinary.com/
-router.post('/upload', (req, res) => {
+//upload image to https://cloudinary.com/  only admin can do it.
+router.post('/upload', auth, authAdmin, (req, res) => {
  try {
   //console.log(req.files)
   if (!req.files || Object.keys(req.files).length === 0)
@@ -41,7 +41,8 @@ router.post('/upload', (req, res) => {
    removeTmp(file.tempFilePath)
    return res.status(400).json({ msg: "file format is incorrect!" })
   }
-
+  //https://cloudinary.com/documentation/node_integration
+  //multer upload file to cloudinary : https://medium.com/@joeokpus/uploading-images-to-cloudinary-using-multer-and-expressjs-f0b9a4e14c54
   cloudinary.v2.uploader.upload(file.tempFilePath, { folder: "test" }, async (err, result) => {
    if (err) throw err;
    removeTmp(file.tempFilePath)
@@ -50,8 +51,27 @@ router.post('/upload', (req, res) => {
   })
 
  } catch (err) {
-  res.status(500).json({ msg: err.message })
+  return res.status(500).json({ msg: err.message })
  }
 })
+
+
+//delete image, only admin can.
+router.delete('/destroy', auth, authAdmin, (req, res) => {
+ try {
+  const { public_id } = req.body;
+  if (!public_id)
+   return res.status(400).json({ msg: "No image selected" })
+  cloudinary.v2.uploader.destroy(public_id, async (err, result) => {
+   if (err) throw err;
+   removeTmp(file.tempFilePath)
+   res.json({ msg: "Image deleted." })
+  })
+ }
+ catch (err) {
+  return res.status(500).json({ msg: err.message })
+ }
+})
+
 
 module.exports = router
