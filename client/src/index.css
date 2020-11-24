@@ -13,15 +13,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+body {
+  width: 100%;
+  background: url("./images/bg4.jpg") no-repeat;
+  background-size: cover;
+  height: 100%;
+  opacity: 97%;
+}
 
 .App {
-  background: url("./images/bg.jpg") no-repeat;
-  background-size: cover;
+  /* background: url("./images/bg.jpg") no-repeat;
+  background-size: cover; */
   max-width: 1230px;
   min-height: 100vh;
   margin: 0 auto;
   padding: 0 20px;
-  box-shadow: 5px 5px 30px #eee;
+  box-shadow: 5px 15px 30px 25px #eee;
 }
 a {
   text-decoration: none;
@@ -38,3 +45,7 @@ button {
 
 /* header */
 @import url("./components/headers//header.css");
+/* products */
+@import url("./components/mainpages/products/products.css");
+/* product detail */
+@import url("./components/mainpages/detailProduct/detailProduct.css");

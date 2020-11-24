@@ -1,13 +1,18 @@
 import React, { useContext } from 'react'
 import { GlobalState } from '../../../GlobalState'
+import ProductItem from '../util/productItem/ProductItem'
 
 function Products() {
  const state = useContext(GlobalState)
+ const [products] = state.productsAPI.products
 
- console.log(state)
  return (
-  <div>
-   Products List
+  <div className="products">
+   {
+    products.map(product => {
+     return <ProductItem key={product._id} product={product} />
+    })
+   }
   </div>
  )
 }

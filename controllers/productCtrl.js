@@ -40,12 +40,14 @@ class APIfeatures {
 
  paginating() {
   const page = this.queryString.page * 1 || 1
-  const limit = this.queryString.limit * 1 || 3
+  const limit = this.queryString.limit * 1 || 9
   const skip = (page - 1) * limit;
   this.query = this.query.skip(skip).limit(limit)
   return this;
  }
 }
+
+
 const productCtrl = {
  getProducts: async (req, res) => {
   try {
@@ -62,6 +64,8 @@ const productCtrl = {
    return res.status(500).json({ msg: err.message })
   }
  },
+
+
  createProduct: async (req, res) => {
   try {
    const { product_id, title, price, description, content, images, category } = req.body;
@@ -85,6 +89,8 @@ const productCtrl = {
    return res.status(500).json({ msg: err.message })
   }
  },
+
+
  deleteProduct: async (req, res) => {
   try {
    await Products.findByIdAndDelete(req.params.id)

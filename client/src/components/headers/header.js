@@ -4,6 +4,7 @@ import Menu from './icons/menu.svg'
 import Close from './icons/close.svg'
 import Cart from './icons/cart.svg'
 import { Link } from 'react-router-dom'
+import Logo from '../../images/logo.png'
 
 const Header = () => {
  const value = useContext(GlobalState)
@@ -14,7 +15,9 @@ const Header = () => {
    </div>
    <div className="logo">
     <h1>
-     <Link to="/">My shop</Link>
+     <Link to="/">
+      <img className="logo" src={Logo} alt="" />
+     </Link>
     </h1>
    </div>
    <ul>
