@@ -7,7 +7,8 @@ import { Link } from 'react-router-dom'
 import Logo from '../../images/logo.png'
 
 const Header = () => {
- const value = useContext(GlobalState)
+ const state = useContext(GlobalState)
+
  return (
   <header >
    <div className="menu">
