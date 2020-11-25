@@ -11,7 +11,7 @@ const Header = () => {
  const state = useContext(GlobalState)
  const [isLogged, setIsLogged] = state.userAPI.isLogged;
  const [isAdmin, setIsAdmin] = state.userAPI.isAdmin;
-
+ const [cart, setCart] = state.userAPI.cart;
  const adminRouter = () => {
   return (
    <>
@@ -65,7 +65,7 @@ const Header = () => {
 
    { isAdmin ? '' :
     <div className="cart-icon">
-     <span>0</span>
+     <span>{cart.length}</span>
      <Link to="/cart">
       <img src={Cart} alt="" width="30" />
      </Link>

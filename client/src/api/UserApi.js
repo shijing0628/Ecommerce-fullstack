@@ -5,6 +5,8 @@ import axios from 'axios'
 function UserApi(token) {
   const [isLogged, setIsLogged] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [cart, setCart] = useState([])
+
 
   useEffect(() => {
     if (token) {
@@ -26,11 +28,23 @@ function UserApi(token) {
     }
   }, [token])
 
+  const addCart = async (e, product) => {
+    e.preventDefault()
+    if (!isLogged) return alert("please login to buy product!")
 
+    const check = cart.every(item => {
+      return item._id !== product._id
+    })
+
+    if (check) { setCart([...cart, { ...product, quantity: 1 }]) }
+    else { alert("This product was added to cart!") }
+  }
 
   return {
     isLogged: [isLogged, setIsLogged],
-    isAdmin: [isAdmin, setIsAdmin]
+    isAdmin: [isAdmin, setIsAdmin],
+    cart: [cart, setCart],
+    addCart: addCart
   }
 }
 
