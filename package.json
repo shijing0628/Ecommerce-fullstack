@@ -5,9 +5,12 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "backend": "nodemon server.js",
-    "frontend": "npm run front --prefix client",
-    "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
+    "server": "nodemon server.js",
+    "client": "cd client && npm run start",
+    "server-install": "npm install",
+    "client-install": "cd client && npm install",
+    "install-all": "concurrently \"npm run server-install\" \"npm run client-install\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "Shijing Liu",

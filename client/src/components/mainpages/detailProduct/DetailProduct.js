@@ -6,54 +6,58 @@ import ProductItem from '../util/productItem/ProductItem'
 // single product detail page
 
 function DetailProduct() {
- const params = useParams()
- const state = useContext(GlobalState)
- const [products] = state.productsAPI.products
- const [detailProduct, setDetailProduct] = useState([])
- //console.log(params)
+  const params = useParams()
+  const state = useContext(GlobalState)
+  const [products] = state.productsAPI.products
+  const [detailProduct, setDetailProduct] = useState([])
+  //console.log(params)
 
- useEffect(() => {
-  //console.log("re-render")
+  useEffect(() => {
+    //console.log("re-render")
 
-  if (params.id) {
-   products.forEach(product => {
-    if (product._id === params.id) setDetailProduct(product)
-   })
-  }
-
- }, [params.id, products])
- //console.log(detailProduct)
- if (detailProduct.length === 0) return null;
- return (
-  <>
-   <div className="detail">
-    <img src={detailProduct.images.url} alt="" />
-    <div className="box-detail">
-     <div className="row">
-      <h2>{detailProduct.title}</h2>
-      <h6>Product ID: {detailProduct.product_id}</h6>
-     </div>
-     <span>$ {detailProduct.price}</span>
-     <p>{detailProduct.description}</p>
-     <p>{detailProduct.content}</p>
-     <p>Sold: {detailProduct.sold}</p>
-     <Link to="/cart" className="cart btn-buy">Buy Now</Link>
-    </div>
-   </div>
-   {/* related product section */}
-   <div>
-    <h2>Related products</h2>
-    <div className="products">
-     {
-      products.map(product => {
-       return product.category === detailProduct.category
-        ? <ProductItem key={product._id} product={product} /> : null
+    if (params.id) {
+      products.forEach(product => {
+        if (product._id === params.id) setDetailProduct(product)
       })
-     }
-    </div>
-   </div>
-  </>
- )
+    }
+
+  }, [params.id, products])
+  //console.log(detailProduct)
+  if (detailProduct.length === 0) return null;
+  return (
+    <>
+      <div className="detail">
+        <img src={detailProduct.images.url} alt="" />
+        <div className="box-detail">
+          <div className="row">
+            <h2>{detailProduct.title}</h2>
+            <h6>Product ID: {detailProduct.product_id}</h6>
+          </div>
+          <span>$ {detailProduct.price}</span>
+          <p>{detailProduct.description}</p>
+          <p>{detailProduct.content}</p>
+          <p>Sold: {detailProduct.sold}</p>
+          <br /><br />
+          <div>
+            <Link to="/cart" className="cart btn-buy">Add To Cart</Link>
+          </div>
+
+        </div>
+      </div>
+      {/* related product section */}
+      <div>
+        <h2>Related products</h2>
+        <div className="products">
+          {
+            products.map(product => {
+              return product.category === detailProduct.category
+                ? <ProductItem key={product._id} product={product} /> : null
+            })
+          }
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default DetailProduct

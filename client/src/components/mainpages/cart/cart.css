@@ -1,0 +1,38 @@
+.detail.cart {
+  position: relative;
+  border: 1px solid #ccc;
+  transform: scaleY(0.98);
+  background-color: rgb(216, 224, 255);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+  transform: scale(0.85);
+  margin-top: 0;
+  padding: 0;
+  border-radius: 10px;
+}
+.detail.cart img:hover {
+  transform: scale(1);
+}
+.detail.cart .amount span {
+  color: tomato;
+  padding: 0 20px;
+}
+
+.detail.cart .amount button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #444;
+}
+.delete {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  color: tomato;
+  font-weight: 900;
+  cursor: pointer;
+  font-size: 30px;
+}
+.total {
+  width: 100%;
+  height: 50px;
+  display: flex;
+}
